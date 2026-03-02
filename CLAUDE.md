@@ -19,21 +19,33 @@ modules/aikosh/
   CLAUDE.md                          # this file
   .gitignore
   src/aikosh/
-    __init__.py                      # public API
-    schema.py                        # entry validation (genus/species/instance)
-    query.py                         # find entries by region, altitude, landscape
-    validate.py                      # consistency checks (back-references, vocabulary)
+    __init__.py                      # pipeline overview
+    validate.py                      # source-level gate
+    distill.py                       # plugin registry (source → entries[])
+    schema.py                        # entry-level gate (per-collection schemas)
+    query.py                         # retrieval surface (find entries by attributes)
   tests/
 ```
 
-## Core Concepts
+## Pipeline
 
-- **Schema validation**: entries follow a genus → species → instance hierarchy.
-  Each level has required and optional fields. The schema is per-collection.
-- **Query**: agents need to find entries by attributes (region, altitude,
-  landscape type) without loading entire collections. Token cost matters.
-- **Consistency checks**: back-references between entries must resolve.
-  Controlled vocabulary terms must come from the declared vocabulary.
+```
+source → validate → distill plugins → schema-check → index → query
+                     ├─ plugin₁ → spirits[]
+                     ├─ plugin₂ → sites[]
+                     └─ plugin₃ → ...
+```
+
+- **Validate** (`validate.py`): source-level gate. Can aikosh work with this
+  source? Any source that can be indexed passes. Knows nothing about schemas.
+- **Distill** (`distill.py`): plugin registry. Each plugin extracts entries for
+  a specific collection from a validated source. Same source, multiple plugins,
+  different kinds of knowledge. The adapter pattern.
+- **Schema** (`schema.py`): entry-level gate. Does a distilled YAML entry conform
+  to its collection's schema? Genus → species → instance hierarchy with
+  per-level required fields, controlled vocabulary, back-references.
+- **Query** (`query.py`): retrieval surface. Find entries by attributes without
+  loading entire collections. Token cost matters.
 
 ## Python Environment
 
