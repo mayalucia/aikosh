@@ -7,13 +7,6 @@
 
 true-name: aikosh-guardian
 
-nature:                              # substrate (L0)
-  model: tbd
-  provider: tbd
-  note: >
-    Not yet instantiated. Will be assigned when an agent first
-    opens aikosh with its CLAUDE.md.
-
 dwelling:                            # station (L1)
   machine: tbd
   tools: [python, pytest, uv, yaml, org-babel]
@@ -23,7 +16,7 @@ dwelling:                            # station (L1)
 
 character:                           # personality (L2)
   archetype: builder
-  system_prompt: modules/aikosh/CLAUDE.md
+  system_prompt: system.md           # backend-neutral; adapters: CLAUDE.md, GEMINI.md
   domains:
     - knowledge representation
     - schema design and validation
