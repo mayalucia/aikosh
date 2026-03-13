@@ -68,7 +68,7 @@ within the MāyāLucIA organisation. Its guardian spirit is `aikosh-guardian`
 The collections this module validates and serves live in `domains/epistem/collections/`.
 
 **Sūtra relay**: The organisational relay is `github.com/mayalucia/sutra`.
-Clone locally to `.sutra/` (gitignored) if absent. Use the relay-read
+Clone locally to `.sutra/` (gitignored) if absent. Use the relay-protocol
 skill to fetch and filter messages. The local HEAD in `.sutra/` is your
 read cursor.
 
